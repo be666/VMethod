@@ -2,11 +2,11 @@
   <header class="am-topbar">
     <div class="am-container">
       <h1 class="am-topbar-brand">
-        <a href="#">VMethod</a>
+        <a href="javascript:void(0)">VMethod</a>
       </h1>
-      <ge_header
+      <vm_header
         v-bind:user-info="userInfo">
-      </ge_header>
+      </vm_header>
     </div>
   </header>
   <section>
@@ -17,7 +17,7 @@
   var tools = require("../tools");
   module.exports = {
     components: {
-      "ge_header": require("./header.vue")
+      "vm_header": require("./header.vue")
     },
     data: function () {
       return {

@@ -33,6 +33,10 @@ router.map({
       "login": {
         name: "login",
         component: require("./layouts/login.vue")
+      },
+      "about": {
+        name: "about",
+        component: require("./pages/about.vue")
       }
     },
     "*": {
@@ -43,11 +47,7 @@ router.map({
 });
 
 router.redirect({
-  '/': '/alarm/geShare',
-  '/in': '/in/geShare',
-  '/alarm': '/alarm/geShare',
-  '/out': '/out/geShare',
-  '/sys': '/sys/store'
+  '/': '/about'
 })
 
 router.beforeEach(function (transition) {

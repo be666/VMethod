@@ -3,7 +3,7 @@ module.exports = {
   "scanUrl": "/api",
   "uploadUrl": "/fileUpload",
   "auth": {
-    "ignoreAll": false,
+    "ignoreAll": true,
     "ignore": [
       "/login"
     ]
