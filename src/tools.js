@@ -105,12 +105,6 @@ pub.getUserInfo = function () {
 pub.setUserInfo = function (obj) {
   if (obj != null) {
     obj.userRule = obj.userRule || [];
-    var rule = obj.userRule;
-    obj.allowIn = pub.inArray(rule, "producer") || pub.inArray(rule, "keeper");
-    obj.allowOut = pub.inArray(rule, "consumer");
-    obj.allowAlarm = pub.inArray(rule, "keeper");
-    obj.allowLogout = true;
-    obj.allowSys = rule.length == 3;
   }
   pub.putCurrentContext("userInfo", obj);
 };
@@ -146,13 +140,6 @@ pub.resolveUrl = function (url) {
     url = url.substring(1, url.length);
   }
   return config.apiUrl + "/" + url
-};
-
-pub.resolveScanUrl = function (url) {
-  while (url.indexOf("/") == 0) {
-    url = url.substring(1, url.length);
-  }
-  return config.scanUrl + "/" + url
 };
 
 pub.uploadFile = function (url) {
@@ -209,5 +196,13 @@ pub.selectArg = function (id, name, unSelectedCode, unSelectedName, selected, se
   arg["unSelected"][id] = unSelectedCode;
   arg["unSelected"][name] = unSelectedName;
   return arg;
-}
+};
+
+
+pub.getDefArr = function () {
+  return {
+    type: 'Array',
+    default: []
+  }
+};
 module.exports = pub;

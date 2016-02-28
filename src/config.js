@@ -1,11 +1,11 @@
 module.exports = {
   "apiUrl": "/api",
-  "scanUrl": "/api",
   "uploadUrl": "/fileUpload",
   "auth": {
-    "ignoreAll": true,
+    "ignoreAll": false,
     "ignore": [
-      "/login"
+      "/login",
+      "/sign"
     ]
   }
 };

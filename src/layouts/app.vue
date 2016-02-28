@@ -1,18 +1,11 @@
 <template>
   <div class="am-g am-g-fixed" id="bd-warp">
-    <div class="am-u-md-9 am-u-md-push-3 doc-content">
+    <div class="am-u-md-10 am-u-md-push-1 doc-content">
       <section>
         <router-view>
 
         </router-view>
       </section>
-    </div>
-    <div class="am-u-md-3 am-u-md-pull-9 ">
-      <nav id="ge-nav" class="amz-sidebar">
-        <ge-nav v-bind:module-name="moduleName">
-
-        </ge-nav>
-      </nav>
     </div>
   </div>
 </template>
@@ -22,17 +15,13 @@
   }
 </style>
 <script>
-  var geNav = require("../components/nav.vue");
-  var tools = require("../tools");
   module.exports = {
-    components: {
-      "ge-nav": geNav
-    },
     compiled: function () {
     },
     data: function () {
+      var $this = this;
       return {
-        moduleName: this.moduleName
+        moduleName: $this.moduleName
       }
     },
     route: {

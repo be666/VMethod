@@ -1,23 +1,13 @@
 <template>
-  <header class="am-topbar">
-    <div class="am-container">
-      <h1 class="am-topbar-brand">
-        <a href="javascript:void(0)">VMethod</a>
-      </h1>
-      <vm_header
-        v-bind:user-info="userInfo">
-      </vm_header>
-    </div>
-  </header>
+  <i_header v-bind:user-info="userInfo"></i_header>
   <section>
     <router-view></router-view>
   </section>
 </template>
 <script>
-  var tools = require("../tools");
   module.exports = {
     components: {
-      "vm_header": require("./header.vue")
+      'i_header': require("./header.vue")
     },
     data: function () {
       return {
@@ -26,7 +16,8 @@
     },
     route: {
       data: function (transition) {
-        this.userInfo = tools.getUserInfo();
+        var $this = this;
+        $this.userInfo = $this.$tools.getUserInfo();
       }
     }
   }
