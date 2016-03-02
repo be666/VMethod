@@ -1,24 +1,21 @@
 /**
  * Created by bqxu on 15/12/14.
  */
-var config = require("./config.js");
-var pub = {};
-pub.isNotEmptyStr = function (str) {
+let {default:config} = require("./config.js");
+
+let isNotEmptyStr = function (str) {
   return (typeof str == 'string' && str.length > 0);
 };
 
-pub.isNotObj = function (obj) {
+
+let isNotObj = function (obj) {
   return (typeof obj == "undefined" || obj == null);
 };
 
-pub.getCurrentDateTimeStr = function () {
-  return pub.getDateTimeStr(new Date());
-};
-
-pub.getDateTimeStr = function (currentDate) {
+let getDateTimeStr = function (currentDate) {
   currentDate = new Date(currentDate);
-  var fmt = "yyyy-MM-dd hh:mm:ss";
-  var o = {
+  let fmt = "yyyy-MM-dd hh:mm:ss";
+  let o = {
     "M+": currentDate.getMonth() + 1, //月份
     "d+": currentDate.getDate(), //日
     "h+": currentDate.getHours(), //小时
@@ -33,10 +30,15 @@ pub.getDateTimeStr = function (currentDate) {
   return fmt;
 };
 
-pub.getDateStr = function (currentDate) {
+let getCurrentDateTimeStr = function () {
+  return getDateTimeStr(new Date());
+};
+
+
+let getDateStr = function (currentDate) {
   currentDate = new Date(currentDate);
-  var fmt = "yyyy-MM-dd";
-  var o = {
+  let fmt = "yyyy-MM-dd";
+  let o = {
     "M+": currentDate.getMonth() + 1, //月份
     "d+": currentDate.getDate(), //日
     "h+": currentDate.getHours(), //小时
@@ -49,10 +51,10 @@ pub.getDateStr = function (currentDate) {
   for (var k in o)
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
   return fmt;
-}
+};
 
 
-pub.getUUid = function (len, radix) {
+let getUUid = function (len, radix) {
   var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   var uuid = [], i;
   radix = radix || chars.length;
@@ -80,48 +82,42 @@ pub.getUUid = function (len, radix) {
   return uuid.join('');
 };
 
-var CurrentContext = {};
-pub.checkCurrentContext = function () {
+
+let CurrentContext = {};
+let checkCurrentContext = function () {
   if (!CurrentContext.id) {
-    CurrentContext.id = pub.getUUid();
+    CurrentContext.id = getUUid();
   }
   return CurrentContext;
 };
 
-pub.putCurrentContext = function (name, obj) {
-  var context = pub.checkCurrentContext();
+
+let putCurrentContext = function (name, obj) {
+  var context = checkCurrentContext();
   context[name] = obj;
 };
 
-pub.getCurrentContext = function (name) {
-  var context = pub.checkCurrentContext();
+
+let getCurrentContext = function (name) {
+  var context = checkCurrentContext();
   return context[name];
 };
 
-pub.getUserInfo = function () {
-  return pub.getCurrentContext("userInfo");
+
+let getUserInfo = function () {
+  return getCurrentContext("userInfo");
 };
 
-pub.setUserInfo = function (obj) {
+
+let setUserInfo = function (obj) {
   if (obj != null) {
     obj.userRule = obj.userRule || [];
   }
-  pub.putCurrentContext("userInfo", obj);
+  putCurrentContext("userInfo", obj);
 };
 
 
-pub.checkRule = function (module) {
-  var userInfo = pub.setUserInfo();
-  if (module == 'sys') {
-    return userInfo && userInfo.userRule.length == 3;
-  } else if (module == "logout") {
-    return userInfo != null;
-  } else {
-    return tools.inArray(userInfo, module)
-  }
-};
-
-pub.inArray = function (arr, el, comp) {
+let inArray = function (arr, el, comp) {
   arr = arr || [];
   for (var i = 0, k = arr.length; i < k; i++) {
     if (typeof comp == "function") {
@@ -135,21 +131,15 @@ pub.inArray = function (arr, el, comp) {
   }
 };
 
-pub.resolveUrl = function (url) {
+
+let resolveUrl = function (url) {
   while (url.indexOf("/") == 0) {
     url = url.substring(1, url.length);
   }
   return config.apiUrl + "/" + url
 };
 
-pub.uploadFile = function (url) {
-  while (url.indexOf("/") == 0) {
-    url = url.substring(1, url.length);
-  }
-  return config.apiUrl + "/" + url
-};
-
-pub.loadCode = function ($http, codeType, cb) {
+let loadCode = function ($http, codeType, cb) {
   $http.get(this.resolveUrl("/Codes"), {
     filter: {
       where: {
@@ -163,7 +153,8 @@ pub.loadCode = function ($http, codeType, cb) {
   })
 };
 
-pub.buildMap = function (list, code, codeName) {
+
+let buildMap = function (list, code, codeName) {
   var map = {};
   list = list || [];
   for (var i = 0; i < list.length; i++) {
@@ -173,19 +164,17 @@ pub.buildMap = function (list, code, codeName) {
   return map;
 };
 
-pub.config = config;
-
-pub.widthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-pub.heightList = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+let widthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+let heightList = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
 /**
  * @return {number}
  */
-pub.WH2Index = function (h, w) {
-  return (h.charCodeAt() - 65 ) * pub.widthList.length + parseInt(w) - 1;
+let WH2Index = function (h, w) {
+  return (h.charCodeAt() - 65 ) * widthList.length + parseInt(w) - 1;
 };
 
-pub.selectArg = function (id, name, unSelectedCode, unSelectedName, selected, selectedName) {
+let selectArg = function (id, name, unSelectedCode, unSelectedName, selected, selectedName) {
   var arg = {};
   arg["id"] = id;
   arg["text"] = name;
@@ -199,10 +188,22 @@ pub.selectArg = function (id, name, unSelectedCode, unSelectedName, selected, se
 };
 
 
-pub.getDefArr = function () {
+let getDefArr = function () {
   return {
     type: 'Array',
     default: []
   }
 };
-module.exports = pub;
+
+
+export {
+  isNotEmptyStr,isNotObj,
+  getDateTimeStr,getCurrentDateTimeStr,getDateStr,
+  getUUid,
+  checkCurrentContext,putCurrentContext,getCurrentContext,
+  getUserInfo,setUserInfo,
+  inArray,
+  resolveUrl,loadCode,config,buildMap,
+  widthList,heightList,WH2Index,
+  selectArg, getDefArr
+}

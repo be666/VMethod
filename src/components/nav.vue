@@ -13,26 +13,25 @@
   </ul>
 </template>
 <style lang="less">
-  #ge-nav .am-nav {
+  .am-nav {
     border: 1px solid #ddd;
   }
-
 </style>
 <script>
-  module.exports = {
+  export default {
     name: 'i_nav',
-    data: function () {
+    data () {
       return {
         moduleName: this.moduleName,
         navList: this.navList
       }
     },
     props: ["moduleName", "navList"],
-    created: function () {
+    created () {
 
     },
     methods: {
-      update: function () {
+      update () {
 
       }
     }

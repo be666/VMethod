@@ -27,18 +27,16 @@
   </div>
 </template>
 <script>
-  module.exports = {
-    created: function () {
-      var $this = this;
-      $this.userInfo = $this.userInfo || {};
+  export default {
+    created() {
+      this.userInfo = this.userInfo || {};
     },
     props: ["userInfo"],
     methods: {
-      logout: function () {
-        var $this = this;
-        $this.$http.post($this.$tools.resolveUrl("/Users/logout"), function (data, status, request) {
-          $this.$auth.loginOut();
-          $this.$dispatch('link', "login");
+      logout () {
+        this.$http.post(this.$tools.resolveUrl("/Users/logout"), function (data, status, request) {
+          this.$auth.loginOut();
+          this.$dispatch('link', "login");
         })
       }
     }

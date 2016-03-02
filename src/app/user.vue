@@ -48,7 +48,7 @@
     },
     attached: function () {
       var $this = this;
-      $this.$http.get($this.$tools.resolveUrl("/Apps"), function (res, ste, req) {
+      $this.$http.get($this.$tools.resolveUrl("/Users"), function (res, ste, req) {
         $this.$refs.table.dataList = res;
       })
     },

@@ -5,19 +5,18 @@
   </section>
 </template>
 <script>
-  module.exports = {
+  export default  {
     components: {
       'i_header': require("./header.vue")
     },
-    data: function () {
+    data () {
       return {
         userInfo: this.userInfo
       }
     },
     route: {
-      data: function (transition) {
-        var $this = this;
-        $this.userInfo = $this.$tools.getUserInfo();
+      data (transition) {
+        this.userInfo = this.$tools.getUserInfo();
       }
     }
   }

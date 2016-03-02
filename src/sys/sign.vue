@@ -48,28 +48,25 @@
   </div>
 </template>
 <script>
-  module.exports = {
-
+  export default {
     data: function () {
-      var $this = this;
       return {
-        userName: $this.userName,
-        passWord: $this.passWord
+        userName: this.userName,
+        passWord: this.passWord
       };
     },
     methods: {
-      login: function () {
-        var $this = this;
-        $this.$http.post($this.$tools.resolveUrl("/Users"), {
-          "loginName": $this.userName,
-          "realName": $this.userName,
-          "userName": $this.userName,
-          "passWord": $this.passWord,
+      login () {
+        this.$http.post(this.$tools.resolveUrl("/Users"), {
+          "loginName": this.userName,
+          "realName": this.userName,
+          "userName": this.userName,
+          "passWord": this.passWord,
           "state": 1,
           "email": "string",
           "id": 0
         }, function (data, status, request) {
-          $this.$dispatch('link', "root");
+          this.$dispatch('link', "root");
         }).error(function (data, status, request) {
 
         });

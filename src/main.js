@@ -1,11 +1,11 @@
 /**
  * Created by bqxu on 15/12/10.
  */
-var Vue = require('vue');
-var VueRouter = require('vue-router');
-var VueResource = require('vue-resource');
-var tools = require('./tools');
-var auth = require('./auth');
+let Vue = require('vue');
+let VueRouter = require('vue-router');
+let VueResource = require('vue-resource');
+let {inArray,config:{auth={}}} = require('./tools');
+let {valid} = require('./auth');
 
 Vue.config.debug = true;
 
@@ -27,6 +27,7 @@ Vue.component('i_search', require("./components/search.vue"));
 Vue.component('i_search_multi', require("./components/select-multi.vue"));
 Vue.component('i_search_single', require("./components/select-single.vue"));
 Vue.component('i_table', require("./components/table.vue"));
+Vue.component('i_radio', require("./components/radio.vue"));
 
 //filter
 
@@ -35,12 +36,12 @@ Vue.filter('equal', function (v1, v2) {
 });
 
 Vue.filter('gt0', function (arr) {
-  var a = arr || 0;
+  let a = arr || 0;
   return a > 0;
 });
 
 //main
-var App = Vue.extend({
+let App = Vue.extend({
   events: {
     link: function (pathName, params) {
       router.go({
@@ -51,7 +52,7 @@ var App = Vue.extend({
   }
 });
 
-var router = new VueRouter();
+let router = new VueRouter();
 router.map({
   '/': {
     name: "root",
@@ -68,6 +69,10 @@ router.map({
           "token": {
             name: "token",
             component: require("./app/token.vue")
+          },
+          "center": {
+            name: "center",
+            component: require("./app/center.vue")
           }
         }
       },
@@ -88,16 +93,16 @@ router.map({
 });
 
 router.redirect({
-  "/": "/analysis"
+  "/": "/center"
 });
 
 router.beforeEach(function (transition) {
-  if (tools.config.auth.ignoreAll) {
+  if (auth.ignoreAll) {
     transition.next()
-  } else if (tools.inArray(tools.config.auth.ignore, transition.to.path)) {
+  } else if (inArray(auth.ignore, transition.to.path)) {
     transition.next()
   } else {
-    auth.valid(transition.to.router.app, function () {
+    valid(transition.to.router.app, function () {
       transition.next();
     }, function () {
       transition.redirect("/login")

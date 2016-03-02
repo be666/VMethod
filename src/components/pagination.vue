@@ -38,28 +38,25 @@
   }
 </style>
 <script>
-  module.exports = {
+  export default{
     name: "i_pagination",
-    data: function () {
-      var $this = this;
+    data () {
       return {
-        pageIndex: $this.pageMaker.pageIndex || 0,
-        pageSize: $this.pageMaker.pageSize || 10,
-        totalPage: $this.pageMaker.totalPage || 0,
-        pages: $this.pageMaker.pages || [],
-        rowCount: $this.pageMaker.rowCount || 0,
-        sizes: $this.pageMaker.sizes || [10, 20, 50, 100]
+        pageIndex: this.pageMaker.pageIndex || 0,
+        pageSize: this.pageMaker.pageSize || 10,
+        totalPage: this.pageMaker.totalPage || 0,
+        pages: this.pageMaker.pages || [],
+        rowCount: this.pageMaker.rowCount || 0,
+        sizes: this.pageMaker.sizes || [10, 20, 50, 100]
       }
     },
     props: ['pageMaker'],
     methods: {
-      sizeClick: function (size) {
-        var $this = this;
-        $this.$dispatch('pageClick', 1, size)
+      sizeClick (size) {
+        this.$dispatch('pageClick', 1, size)
       },
-      indexClick: function (index) {
-        var $this = this;
-        $this.$dispatch('pageClick', index, this.size)
+      indexClick (index) {
+        this.$dispatch('pageClick', index, this.size)
       }
     }
   }

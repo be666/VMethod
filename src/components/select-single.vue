@@ -21,39 +21,36 @@
   </div>
 </template>
 <script>
-  module.exports = {
-    name: "ge_select",
+  export default {
+    name: "i_select",
     props: ['id', 'text', 'selected', 'unSelected', "pid", 'itemList'],
     data: function () {
-      var $this = this;
       return {
         active: 0,
-        id: $this.id || "id",
-        pid: $this.pid || $this.$tools.getUUid(),
-        text: $this.text || "text",
-        selected: $this.selected || {},
-        unSelected: $this.unSelected || {
+        id: this.id || "id",
+        pid: this.pid || this.$tools.getUUid(),
+        text: this.text || "text",
+        selected: this.selected || {},
+        unSelected: this.unSelected || {
           id: "",
           text: "请选择"
         },
-        itemList: $this.itemList
+        itemList: this.itemList
       }
     },
     methods: {
-      toggle: function () {
-        var $this = this;
-        $this.active = 1 - $this.active;
+      toggle() {
+        this.active = 1 - this.active;
       },
-      clicked: function (idVal, textVal) {
-        var $this = this;
+      clicked(idVal, textVal) {
         var selected = {};
-        selected[$this.id] = idVal;
-        selected[$this.text] = textVal;
-        $this.selected = selected;
-        $this.active = 0;
-        $this.$dispatch("selecting", $this.pid, idVal, textVal);
+        selected[this.id] = idVal;
+        selected[this.text] = textVal;
+        this.selected = selected;
+        this.active = 0;
+        this.$dispatch("selecting", this.pid, idVal, textVal);
       },
-      equal: function (v1, v2) {
+      equal (v1, v2) {
         return v1 == v2;
       }
     }

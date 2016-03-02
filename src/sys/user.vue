@@ -25,8 +25,8 @@
   </div>
 </template>
 <script>
-  module.exports = {
-    data: function () {
+  export default {
+    data () {
       return {
         username: null,
         password: null,
@@ -34,14 +34,13 @@
       }
     },
     methods: {
-      login: function () {
-        var $this = this;
-        $this.$http.post($this.$tools.resolveUrl("/Users/login"), {
-          username: $this.username,
-          password: $this.password,
-          autoLogin: $this.autoLogin
+      login () {
+        this.$http.post(this.$tools.resolveUrl("/Users/login"), {
+          username: this.username,
+          password: this.password,
+          autoLogin: this.autoLogin
         }, function (data, status, request) {
-          $this.$dispatch('link', "root");
+          this.$dispatch('link', "root");
         }).error(function (data, status, request) {
 
         })

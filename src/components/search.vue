@@ -1,7 +1,7 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
-  <div class="am-cf ge-input-group ge-search-warp">
-    <input type="text" placeholder="{{placeholder}}" class="ge-search-field" v-model="keyWord">
-    <span class="ge-input-search-label">
+  <div class="am-cf i-input-group i-search-warp">
+    <input type="text" placeholder="{{placeholder}}" class="i-search-field" v-model="keyWord">
+    <span class="i-input-search-label">
       <button type="button" v-on:click="searched">
         {{tips}}
       </button>
@@ -9,14 +9,14 @@
   </div>
 </template>
 <style>
-  .ge-search-warp {
+  .i-search-warp {
     display: inline-block;
     width: 100%;
     height: 32px;
 
   }
 
-  .ge-search-warp .ge-search-field {
+  .i-search-warp .i-search-field {
     display: inline-block;
     width: 60%;
     height: inherit;
@@ -25,36 +25,34 @@
     float: left;
   }
 
-  .ge-input-search-label {
+  .i-input-search-label {
     display: inline-block;
     width: 40%;
     height: inherit;
     float: left;
   }
 
-  .ge-input-search-label button {
+  .i-input-search-label button {
     height: inherit;
   }
 
 </style>
 <script>
-  module.exports = {
+  export default {
     props: ["keyWord", "placeholder", "tips"],
-    data: function () {
-      var $this = this;
-      $this.placeholder = $this.placeholder || "输入";
-      $this.tips = $this.tips || "查询";
+    data () {
+      this.placeholder = this.placeholder || "输入";
+      this.tips = this.tips || "查询";
       return {
-        placeholder: $this.placeholder,
-        tips: $this.tips,
-        keyWord: $this.keyWord,
-        formId: $this.$tools.getUUid()
+        placeholder: this.placeholder,
+        tips: this.tips,
+        keyWord: this.keyWord,
+        formId: this.$tools.getUUid()
       }
     },
     methods: {
-      searched: function () {
-        var $this = this;
-        $this.$dispatch("searched")
+      searched() {
+        this.$dispatch("searched")
       }
     }
   }

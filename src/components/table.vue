@@ -58,14 +58,14 @@
   </table>
 </template>
 <script>
-  module.exports = {
+  export default {
     name: 'i_table',
-    created: function () {
+    created () {
       if (!this.pageMaker) {
         this.pageMaker = {};
       }
     },
-    beforeCompile: function () {
+    beforeCompile() {
       this.optionList = this.optionList || [];
     },
     props: {
@@ -76,32 +76,28 @@
       optionList: 'Array',
       pid: {
         type: 'String',
-        default: function () {
-          var $this = this;
-          return $this.$tools.getUUid();
+        default() {
+          return this.$tools.getUUid();
         }
       }
     },
     events: {
-      pageClick: function (index, size) {
-        var $this = this;
-        $this.$dispatch('tablePageClick', index, size)
+      pageClick (index, size) {
+        this.$dispatch('tablePageClick', index, size)
       }
     },
     methods: {
-      toggleAll: function (event) {
-        var $this = this;
-        var checkbox = [];
+      toggleAll(event) {
+        let checkbox = [];
         if (event.target.checked) {
-          for (var i = 0; i < $this.dataList.length; i++) {
+          for (var i = 0; i < this.dataList.length; i++) {
             checkbox.push(i);
           }
         }
-        $this.checkbox = checkbox;
+        this.checkbox = checkbox;
       },
-      optionEvent: function (optionId, data) {
-        var $this = this;
-        $this.$dispatch('table-click', $this.pid, optionId, data);
+      optionEvent(optionId, data) {
+        this.$dispatch('table-click', this.pid, optionId, data);
       }
     }
   }

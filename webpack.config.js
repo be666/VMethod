@@ -19,11 +19,7 @@ module.exports = {
       {
         test: /\.vue$/, loader: 'vue'
       },
-      {
-        test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/
-      },
+      {test: /\.js?$/, loader: 'babel', exclude: /node_modules/},
       {
         // edit this for additional asset file types
         test: /\.(png|jpg|gif)$/,
@@ -39,7 +35,7 @@ module.exports = {
     }
   },
   babel: {
-    presets: ['es2015', 'stage-0'],
+    presets: ['es2015'],
     plugins: ['transform-runtime']
   },
   plugins: [

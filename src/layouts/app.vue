@@ -15,21 +15,19 @@
   }
 </style>
 <script>
-  module.exports = {
-    compiled: function () {
+  export default {
+    compiled () {
     },
-    data: function () {
-      var $this = this;
+    data () {
       return {
-        moduleName: $this.moduleName
+        moduleName: this.moduleName
       }
     },
     route: {
-      data: function (transition) {
-        var $this = this;
+      data (transition) {
         var to = transition.to;
         if (to.matched && to.matched[1]) {
-          $this.moduleName = transition.to.matched[1].handler.name;
+          this.moduleName = transition.to.matched[1].handler.name;
         }
       }
     }

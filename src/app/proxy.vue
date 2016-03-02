@@ -1,8 +1,8 @@
-<template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div class="am-panel am-panel-default">
     <div class="am-panel-hd">
       <h3 class="am-panel-title">
-        用户登陆token
+        服务管理
       </h3>
     </div>
     <div class="am-panel-bd">
@@ -13,10 +13,8 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
-<style lang='less'>
-
-</style>
 <script type="text/javascript">
   export default {
     methods: {
