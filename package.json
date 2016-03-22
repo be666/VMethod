@@ -1,7 +1,7 @@
 {
-  "name": "VMethod",
+  "name": "client",
   "version": "1.0.0",
-  "description": "vueJs framwork",
+  "description": "auth client",
   "repository": "",
   "main": "index.js",
   "scripts": {

@@ -71,5 +71,6 @@ gulp.task('assets', function () {
     .pipe(gulp.dest('out/dist'))
 });
 
+gulp.task('default', gulpSequence("webpack"));
 
-gulp.task('default', gulpSequence("webpack", "file","assets"));
+gulp.task('all', gulpSequence("webpack", "file","assets"));
