@@ -1,5 +1,5 @@
 <template>
-  <component :is="currentView"></component>
+  <component :is="currentView" v-bind:user-info="userInfo"></component>
   <section>
     <router-view></router-view>
   </section>
@@ -12,7 +12,7 @@
     },
     data () {
       let currentView = 'home';
-      if (this.$config.module=='admin') {
+      if (this.$config.module == 'admin') {
         currentView = 'admin';
       }
       return {

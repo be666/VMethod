@@ -36,7 +36,6 @@
         $this.$http.get($this.$tools.resolveUrl("/AuthGroupUsers"), {
           filter: {
             where: {
-              state: 1,
               appId: $this.appId,
               groupId: $this.groupId
             },
@@ -51,8 +50,23 @@
       link(pathName, params) {
         this.$dispatch('link', pathName, params)
       },
-      optionInfo () {
-
+      optionInfo (pid, oid, data) {
+        let $this = this;
+        let groupUserId = data.id;
+        let state = data.state;
+        if (state == 1) {
+          $this.$http.put($this.$tools.resolveUrl("/AuthGroupUsers/" + groupUserId), {
+            state: 0
+          }, function (res, ste, req) {
+            $this.$dispatch('refresh')
+          })
+        } else if (state == 0) {
+          $this.$http.put($this.$tools.resolveUrl("/AuthGroupUsers/" + groupUserId), {
+            state: 1
+          }, function (res, ste, req) {
+            $this.$dispatch('refresh')
+          })
+        }
       },
       groupUserSelect () {
         var $this = this;
@@ -72,7 +86,7 @@
             }
             var userIds = [];
             for (var cb of checkbox) {
-              userIds.push(dataList[cb].id);
+              userIds.push(dataList[cb].userId);
             }
             $this.$http.post($this.$tools.resolveUrl('/AuthGroupUsers/bind'), {
               appId: $this.appId,
@@ -138,22 +152,12 @@
         render: function (el, attr, index) {
           return attr.telephone
         }
-      }, {
-        id: "state",
-        text: "状态",
-        render: function (el, attr, index) {
-          if (attr == 0) {
-            return '禁用'
-          } else if (attr == 1) {
-            return '启用'
-          }
-        }
       }];
       $this.$refs.table.optionList = [{
         className: 'am-btn-sm',
         id: "in",
         render: function (el, index) {
-          if (el.state == 0) {
+          if (el.state == 1) {
             return "启用";
           } else {
             return "禁用";

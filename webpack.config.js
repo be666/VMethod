@@ -9,6 +9,7 @@ module.exports = {
     'auth-login': path.resolve(__dirname, 'src/auth-login.js'),
     'auth-sign': path.resolve(__dirname, 'src/auth-sign.js')
   },
+
   output: {
     path: path.resolve(__dirname, "dist"),
     publicPath: '/dist/',

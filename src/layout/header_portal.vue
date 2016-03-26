@@ -4,15 +4,12 @@
       <h1 class="am-topbar-brand">
         <a href="/">合生账号</a>
       </h1>
-      <a href="/admin" style="float:right;line-height: 36px">我是管理员</a>
+      <a href="/admin" style="float:right;line-height: 36px" v-if="isAdmin(userInfo)">我是管理员</a>
     </div>
   </header>
 </template>
 <script>
   export default {
-    created() {
-      this.userInfo = this.userInfo || {};
-    },
     props: ["userInfo"],
     methods: {
       logout () {
@@ -20,6 +17,13 @@
           this.$auth.loginOut();
           this.$dispatch('link', "login");
         })
+      },
+      isAdmin: function (userInfo) {
+        userInfo = userInfo || {};
+        let rule = userInfo.rule || [];
+        return rule.findIndex(function (a) {
+            return a == 'admin'
+          }) > -1;
       }
     }
   }

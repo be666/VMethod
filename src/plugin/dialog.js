@@ -3,7 +3,7 @@
  */
 let tools = require('../tools');
 let Vue = require('vue');
-let x=require('./dialog.less');
+
 
 var dialogTemplate = [];
 dialogTemplate.push('<div class="i-modal {{dialogClass}}" id="{{dialogId}}">');

@@ -14,7 +14,7 @@
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">登陆名</label>
             <div class="am-u-sm-9 am-u-end ">
-              <input type="text" v-model="userInfo.loginName" required placeholder="">
+              <input type="text" v-model="userInfo.loginName" readonly placeholder="">
             </div>
           </div>
           <div class="am-form-group">
@@ -23,39 +23,58 @@
               <input type="text" v-model="userInfo.userName" required placeholder="">
             </div>
           </div>
-          <div class="am-form-group">
-            <label class="am-u-sm-3 am-form-label">真实姓名</label>
-            <div class="am-u-sm-9 am-u-end ">
-              <input type="text" v-model="userInfo.realName" required placeholder="">
-            </div>
-          </div>
+          <!--<div class="am-form-group">-->
+          <!--<label class="am-u-sm-3 am-form-label">真实姓名</label>-->
+          <!--<div class="am-u-sm-9 am-u-end ">-->
+          <!--<input type="text" v-model="userInfo.realName" required placeholder="">-->
+          <!--</div>-->
+          <!--</div>-->
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">邮箱</label>
             <div class="am-u-sm-9 am-u-end ">
-              <input type="text" v-model="userInfo.email" required placeholder="">
+              <input type="email" v-model="userInfo.email" required placeholder="">
             </div>
           </div>
           <div class="am-form-group">
-            <label class="am-u-sm-3 am-form-label">出生日期</label>
+            <label class="am-u-sm-3 am-form-label">电话</label>
             <div class="am-u-sm-9 am-u-end ">
-              <input type="date" v-model="userInfo.birthday" required placeholder="">
+              <input type="text" v-model="userInfo.telephone" required placeholder="">
+            </div>
+          </div>
+          <!--<div class="am-form-group">-->
+          <!--<label class="am-u-sm-3 am-form-label">出生日期</label>-->
+          <!--<div class="am-u-sm-9 am-u-end ">-->
+          <!--<input type="date" v-model="userInfo.birthday" required placeholder="">-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--<div class="am-form-group">-->
+          <!--<label class="am-u-sm-3 am-form-label">联系地址</label>-->
+          <!--<div class="am-u-sm-9 am-u-end ">-->
+          <!--<input type="text" v-model="userInfo.address" required placeholder="">-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--<div class="am-form-group">-->
+          <!--<label class="am-u-sm-3 am-form-label">性别</label>-->
+          <!--<div class="am-u-sm-9 am-u-end ">-->
+          <!--<i_radio-->
+          <!--v-bind:item-list="sexList"-->
+          <!--v-bind:choose.sync="userInfo.sex"-->
+          <!--sid="sid"-->
+          <!--text="name"-->
+          <!--&gt;</i_radio>-->
+          <!--</div>-->
+          <!--</div>-->
+
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">密码</label>
+            <div class="am-u-sm-9 am-u-end ">
+              <input type="password" v-model="userInfo.password" required placeholder="">
             </div>
           </div>
           <div class="am-form-group">
-            <label class="am-u-sm-3 am-form-label">联系地址</label>
+            <label class="am-u-sm-3 am-form-label">确认密码</label>
             <div class="am-u-sm-9 am-u-end ">
-              <input type="text" v-model="userInfo.address" required placeholder="">
-            </div>
-          </div>
-          <div class="am-form-group">
-            <label class="am-u-sm-3 am-form-label">性别</label>
-            <div class="am-u-sm-9 am-u-end ">
-              <i_radio
-                v-bind:item-list="sexList"
-                v-bind:choose.sync="userInfo.sex"
-                sid="sid"
-                text="name"
-              ></i_radio>
+              <input type="password" v-model="userInfo.password2" required placeholder="">
             </div>
           </div>
           <div class="am-form-group">
@@ -89,24 +108,28 @@
         this.$dispatch('link', pathName, params)
       },
       reset(){
-
+        this.$dispatch('link', 'root')
       },
       submitForm(){
-        this.$http.put(this.$tools.resolveUrl("/Users"), {
+        if (this.userInfo.password != this.userInfo.password2) {
+          this.$dialog.error('请确认正确的密码格式!');
+          return false;
+        }
+        this.$http.post(this.$tools.resolveUrl("/AuthUsers/modify"), {
           id: this.userInfo.id,
-          realName: this.userInfo.realName,
           userName: this.userInfo.userName,
           email: this.userInfo.email,
-          sex: this.userInfo.sex
+          telephone: this.userInfo.telephone,
+          passWord: this.userInfo.password
         }, function (res, ste, req) {
-          console.log(res);
-        }).error(function () {
-
+          window.location.reload();
+        }).error(function (err) {
+          this.$dialog.error(err.error.message);
         })
       }
     },
     attached () {
-      this.$http.get(this.$tools.resolveUrl("/Users"), {
+      this.$http.get(this.$tools.resolveUrl("/AuthUsers/"), {
         filter: {
           where: {
             id: this.$tools.getUserInfo().userId

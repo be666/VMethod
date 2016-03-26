@@ -7,7 +7,7 @@ let Vue = require('vue');
 let VueResource = require('vue-resource');
 let {inArray,config:{auth={}}} = require('./tools');
 let {valid} = require('./auth');
-
+let x = require('./plugin/dialog.less');
 Vue.config.debug = true;
 
 Vue.use(function (vue) {

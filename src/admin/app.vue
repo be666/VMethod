@@ -45,8 +45,25 @@
         var $this = this;
         $this.$dispatch('link', pathName, params)
       },
-      optionInfo () {
-
+      optionInfo (pid, oid, data) {
+        var $this = this;
+        if (oid == 'state') {
+          let appId = data.id;
+          let state = data.state;
+          if (state == 1) {
+            $this.$http.put($this.$tools.resolveUrl("/AuthApps/" + appId), {
+              state: 0
+            }, function (res, ste, req) {
+              $this.$dispatch('refresh')
+            })
+          } else if (state == 0) {
+            $this.$http.put($this.$tools.resolveUrl("/AuthApps/" + appId), {
+              state: 1
+            }, function (res, ste, req) {
+              $this.$dispatch('refresh')
+            })
+          }
+        }
       },
       groupCtl(){
         var $index = this.$refs.table.checkbox[0];
@@ -63,6 +80,18 @@
         })
       }
     },
+    events: {
+      refresh: function () {
+        var $this = this;
+        $this.$http.get($this.$tools.resolveUrl("/AuthApps"), {
+          filter: {
+            order: 'state DESC'
+          }
+        }, function (res, ste, req) {
+          $this.$refs.table.dataList = res;
+        })
+      }
+    },
     ready () {
       var $this = this;
       $this.$refs.table.dataList = [];
@@ -71,16 +100,7 @@
 
     },
     attached () {
-      var $this = this;
-      $this.$http.get($this.$tools.resolveUrl("/AuthApps"), {
-        filter: {
-          where: {
-            state: 1
-          }
-        }
-      }, function (res, ste, req) {
-        $this.$refs.table.dataList = res;
-      })
+      this.$dispatch('refresh')
     },
     compiled () {
       var $this = this;
@@ -93,9 +113,6 @@
         id: "siteUrl",
         text: "站点地址"
       }, {
-        id: "siteIp",
-        text: "IP地址"
-      }, {
         id: "appToken",
         text: "token",
         render: function (el, attr, i) {
@@ -104,9 +121,9 @@
       }];
       $this.$refs.table.optionList = [{
         className: 'am-btn-sm',
-        id: "in",
+        id: "state",
         render: function (el, index) {
-          if (el.enable == 0) {
+          if (el.state == 1) {
             return "启用";
           } else {
             return "禁用";

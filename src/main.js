@@ -6,7 +6,7 @@ let VueRouter = require('vue-router');
 let VueResource = require('vue-resource');
 let {inArray,config:{auth={}}} = require('./tools');
 let {valid} = require('./auth');
-
+let x = require('./plugin/dialog.less');
 Vue.config.debug = true;
 
 Vue.use(function (vue) {
@@ -15,6 +15,7 @@ Vue.use(function (vue) {
   vue.prototype.$config = {
     module: 'home'
   }
+  vue.prototype.$dialog = require('./plugin/dialog.js');
 });
 
 
@@ -103,7 +104,6 @@ router.beforeEach(function (transition) {
     transition.next()
   } else {
     valid(transition.to.router.app, function () {
-
       transition.next();
     }, function () {
       transition.redirect("/login")

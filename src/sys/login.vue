@@ -26,6 +26,9 @@
 </template>
 <script>
   export default {
+    created: function () {
+      window.location.href = this.$tools.resolveHost(this.siteUrl) + '/login';
+    },
     data(){
       return {
         username: null,

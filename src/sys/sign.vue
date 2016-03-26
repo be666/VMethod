@@ -9,8 +9,7 @@
               v-on:submit.prevent="login"
               data-am-validator="true" id="new_user"
               novalidate="novalidate">
-          <input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token"
-                                                            value="k2nJX40VUZxdDCoIg5/I6/+flPecnIeeJl2eohmXDCvsgRVl8dbM41A3H+muTi6nFWtPtwWz/50W+4T5Q0G/AA==">
+          <input name="utf8" type="hidden" value="✓">
           <div class="am-form-group">
             <label for="user_email">邮箱</label>
             <input class="am-radius"
@@ -54,6 +53,9 @@
         userName: this.userName,
         passWord: this.passWord
       };
+    },
+    created: function () {
+      window.location.href = this.$tools.resolveHost(this.siteUrl) + '/sign';
     },
     methods: {
       login () {

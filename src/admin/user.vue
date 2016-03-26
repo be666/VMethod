@@ -31,8 +31,37 @@
       link(pathName, params) {
         this.$dispatch('link', pathName, params)
       },
-      optionInfo () {
-
+      optionInfo (pid, oid, data) {
+        var $this = this;
+        if (oid == 'state') {
+          let userId = data.id;
+          let state = data.state;
+          if (state == 1) {
+            $this.$http.put($this.$tools.resolveUrl("/AuthUsers/" + userId), {
+              state: 0
+            }, function (res, ste, req) {
+              $this.$dispatch('refresh')
+            })
+          } else if (state == 0) {
+            $this.$http.put($this.$tools.resolveUrl("/AuthUsers/" + userId), {
+              state: 1
+            }, function (res, ste, req) {
+              $this.$dispatch('refresh')
+            })
+          }
+        }
+      }
+    },
+    events: {
+      refresh: function () {
+        var $this = this;
+        $this.$http.get($this.$tools.resolveUrl("/AuthUsers"), {
+          filter: {
+            order: 'state DESC'
+          }
+        }, function (res, ste, req) {
+          $this.$refs.table.dataList = res;
+        })
       }
     },
     ready () {
@@ -42,16 +71,7 @@
 
     },
     attached () {
-      var $this = this;
-      $this.$http.get($this.$tools.resolveUrl("/AuthUsers"),{
-        filter: {
-          where: {
-            state: 1
-          }
-        }
-      }, function (res, ste, req) {
-        $this.$refs.table.dataList = res;
-      })
+      this.$dispatch('refresh')
     },
     compiled: function () {
       var $this = this;
@@ -82,22 +102,12 @@
       }, {
         id: "telephone",
         text: "电话"
-      }, {
-        id: "enable",
-        text: "状态",
-        render: function (el, attr, index) {
-          if (attr == 0) {
-            return '禁用'
-          } else {
-            return '启用'
-          }
-        }
       }];
       $this.$refs.table.optionList = [{
         className: 'am-btn-sm',
-        id: "in",
+        id: "state",
         render: function (el, index) {
-          if (el.enable == 0) {
+          if (el.state == 1) {
             return "启用";
           } else {
             return "禁用";
